@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pay for Lumper Job</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h1>Pay for Lumper Job</h1>
+  <button id="pay-now">Pay Now</button>
+  <script>
+    document.getElementById("pay-now").onclick = async () => {
+      const res = await fetch("https://us-central1-lumperapp1.cloudfunctions.net/createCheckoutSession", {
+        method: "POST"
+      });
+      const data = await res.json();
+      const stripe = Stripe("pk_test_1234567890");
+      stripe.redirectToCheckout({ sessionId: data.id });
+    };
+  </script>
+</body>
+</html>
